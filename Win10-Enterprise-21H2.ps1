@@ -1,3 +1,18 @@
+#Replaces faulty Function
+Remove-Item -path Function:\Test-MicrosoftUpdateCatalog
+function Test-MicrosoftUpdateCatalog {
+    [CmdletBinding()]
+    param ()
+
+    $StatusCode = (Invoke-WebRequest -uri 'https://www.catalog.update.microsoft.com' -UseBasicParsing -Method Head -ErrorAction Ignore).StatusCode 
+
+    if ($StatusCode -eq 200) {
+        Return $true
+    } else {
+        Return $false
+    }
+}
+
 Write-Host -ForegroundColor Green "Starting OSDCloud Zero Touch Installation"
 Start-Sleep -Seconds 5
 
