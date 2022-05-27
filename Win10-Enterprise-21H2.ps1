@@ -4,7 +4,7 @@ Start-Sleep -Seconds 5
 #Start OSDCloud ZTI
 Write-Host -ForegroundColor Green "Start OSDCloud"
 Start-OSDCloud -OSBuild "21H2" -OSLanguage en-us -OSEdition Enterprise -ZTI -OSVersion "Windows 10"
-
+Write-Host " "
 Write-Host -ForegroundColor Red "                          ########################################################"
 Write-Host -ForegroundColor Blue "                          ########################################################"
 Write-Host -ForegroundColor Green "                          *****  REMOVE USB KEY... PRESS ANY KEY TO CONTINUE *****"
