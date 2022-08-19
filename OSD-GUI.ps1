@@ -18,7 +18,7 @@ Start-Sleep -Seconds 5
 
 #Start OSDCloud ZTI
 Write-Host -ForegroundColor Green "Start OSDCloud"
-Start-OSDCloud -OSBuild "21H2" -OSLanguage en-us -OSEdition Pro -OSLicense Retail -OSVersion "Windows 10" -Firmware
+Start-OSDCloud -OSBuild "21H2" -OSLanguage en-us -OSEdition Pro -OSLicense Retail -OSVersion "Windows 10" -Firmware -SkipODT
 Write-Host " "
 Write-Host -ForegroundColor Red "                          ########################################################"
 Write-Host -ForegroundColor Blue "                          ########################################################"
