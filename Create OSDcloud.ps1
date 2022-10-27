@@ -31,15 +31,25 @@ Remove-Item "$Staffassignedworkspace\Config\AutopilotJSON\NoAdmin_Staff_shared.j
 Edit-OSDCloudwinpe -workspacepath $Generalworkspace -CloudDriver Dell, HP -wallpaper "$Generalworkspace\Wallpaper\guiwallpaper.jpg" -Verbose -StartOSDCloudGUI
 
 # Adds the webscript held in github and applies a wallpaper, and Drivers
-Edit-OSDCloudwinpe -workspacepath $Staffassignedworkspace -CloudDriver Dell, HP, Wifi -StartURL https://raw.githubusercontent.com/retsdmbca/ZTI/master/Win10-Enterprise-21H2.ps1 -wallpaper "$Staffassignedworkspace\Wallpaper\Staff-Assigned.jpg" -Verbose
-Edit-OSDCloudwinpe -WorkspacePath $Staffsharedworkspace -CloudDriver Dell, HP, Wifi -StartURL https://raw.githubusercontent.com/retsdmbca/ZTI/master/Win10-Enterprise-21H2.ps1 -wallpaper "$Staffsharedworkspace\Wallpaper\Staff-Shared.jpg" -Verbose
-Edit-OSDCloudwinpe -WorkspacePath $FrenchStaffSharedworkspace -CloudDriver Dell, HP, Wifi -StartURL https://raw.githubusercontent.com/retsdmbca/ZTI/master/Win10-Enterprise-21H2.ps1 -wallpaper "$Staffsharedworkspace\Wallpaper\Staff-Shared.jpg" -Verbose
+Edit-OSDCloudwinpe -workspacepath $Staffassignedworkspace -CloudDriver Dell, HP, Wifi -StartURL https://raw.githubusercontent.com/retsdmbca/ZTI/master/RETSD-OSD-Git-Config.ps1 -wallpaper "$Staffassignedworkspace\Wallpaper\Staff-Assigned.jpg" -Verbose
+Edit-OSDCloudwinpe -WorkspacePath $Staffsharedworkspace -CloudDriver Dell, HP, Wifi -StartURL https://raw.githubusercontent.com/retsdmbca/ZTI/master/RETSD-OSD-Git-Config.ps1 -wallpaper "$Staffsharedworkspace\Wallpaper\Staff-Shared.jpg" -Verbose
+Edit-OSDCloudwinpe -WorkspacePath $FrenchStaffSharedworkspace -CloudDriver Dell, HP, Wifi -StartURL https://raw.githubusercontent.com/retsdmbca/ZTI/master/RETSD-OSD-Git-Config.ps1 -wallpaper "$Staffsharedworkspace\Wallpaper\Staff-Shared.jpg" -Verbose
 
 #create new ISO
 New-OSDCloudiso -WorkspacePath $Generalworkspace
 New-OSDCloudiso -WorkspacePath $Staffsharedworkspace
 New-OSDCloudiso -WorkspacePath $Staffassignedworkspace
 New-OSDCloudiso -WorkspacePath $FrenchStaffSharedworkspace
+
+###Rename ISOs and move to the route folder
+rename-item -Path "D:\OSDCloud Workspaces\OSDCloud-Generalworkspace\OSDCloud.iso" -NewName "OSDCloud - General.iso"
+rename-item -Path "D:\OSDCloud Workspaces\OSDCloud-WinRE-French-Staff-Shared\OSDCloud.iso" -NewName "OSDCloud - French Staff-Shared.iso"
+rename-item -Path "D:\OSDCloud Workspaces\OSDCloud-WinRE-Staff-Assigned\OSDCloud.iso" -NewName "OSDCloud - Staff-Assigned.iso"
+rename-item -Path "D:\OSDCloud Workspaces\OSDCloud-WinRE-Staff-Shared\OSDCloud.iso" -NewName "OSDCloud - Staff-Shared.iso"
+copy-item -Path "D:\OSDCloud Workspaces\OSDCloud-Generalworkspace\OSDCloud - General.iso" -Destination 'D:\OSDCloud Workspaces'
+copy-item -Path "D:\OSDCloud Workspaces\OSDCloud-WinRE-French-Staff-Shared\OSDCloud - French Staff-Shared.iso" -Destination 'D:\OSDCloud Workspaces'
+copy-item -Path "D:\OSDCloud Workspaces\OSDCloud-WinRE-Staff-Assigned\OSDCloud - Staff-Assigned.iso" -Destination 'D:\OSDCloud Workspaces'
+copy-item -Path "D:\OSDCloud Workspaces\OSDCloud-WinRE-Staff-Shared\OSDCloud - Staff-Shared.iso" -Destination 'D:\OSDCloud Workspaces'
 
 ###Create USB Cloud - This will directly create OSDcloud USB drive.
 new-osdcloudusb -WorkspacePath $Generalworkspace
