@@ -64,8 +64,8 @@ New-OSDCloudiso -WorkspacePath $Generalworkspace
 rename-item -Path "D:\OSDCloud Workspaces\OSDCloud-Generalworkspace\OSDCloud.iso" -NewName "OSDCloud - General.iso"
 copy-item -Path "D:\OSDCloud Workspaces\OSDCloud-Generalworkspace\OSDCloud - General.iso" -Destination 'D:\OSDCloud Workspaces'
 
-
-
+#Update-OSDCloudUSB -DriverPack Lenovo
+#Update-OSDCloudUSB -osname 'Windows 11 22H2' -OSActivation Retail
 ###Create USB Cloud - This will directly create OSDcloud USB drive.
 <#
 new-osdcloudusb -WorkspacePath $Generalworkspace
