@@ -1,22 +1,16 @@
 Install-Module -Name OSD -Force
 Import-Module -name OSD -Force
 
-$Generalworkspace = "D:\OSDCloud Workspaces\OSDCloud-Generalworkspace"
-$Staffsharedworkspace = "D:\OSDCloud Workspaces\OSDCloud-WinRE-Staff-Shared"
-$Staffassignedworkspace = "D:\OSDCloud Workspaces\OSDCloud-WinRE-Staff-Assigned"
-$FrenchStaffSharedworkspace = "D:\OSDCloud Workspaces\OSDCloud-WinRE-French-Staff-Shared"
-$StudentSharedWorkspace = "D:\OSDCloud Workspaces\OSDCloud-WinRE-Student-Shared"
-
 #Run this to generate the Template files - located in C:\Programdata\osdcloud
 New-OSDCloudTemplate -WinRE
 
 ## MAKE SURE YOU COPY THE WALLPAPER, STAFF ASSIGNED AND STAFF_SHARED JSON FILES TO C:\Programdata\osdcloud\config\AutopilotJSON
 # Generates workspace that you would alter/add files.  Pulls files from the template folder C:\Programdata\osdcloud.
 
-
 ### Student Shared ###
 Function StudentShared {
     param([String]$OSVer,[String]$Configfile)
+    $StudentSharedWorkspace = "D:\OSDCloud Workspaces\OSDCloud-Student-Shared - $OSver"
     New-OSDCloudworkspace -WorkspacePath $StudentSharedWorkspace
     Remove-Item "$StudentSharedWorkspace\Config\AutopilotJSON\IT_Devices.json" -Force
     Remove-Item "$StudentSharedWorkspace\Config\AutopilotJSON\NoAdmin_Staff_Assigned.json" -Force
@@ -25,13 +19,14 @@ Function StudentShared {
     Edit-OSDCloudwinpe -WorkspacePath $StudentSharedWorkspace -CloudDriver Dell, HP, Wifi -StartURL $Configfile -wallpaper "$StudentSharedWorkspace\Wallpaper\Student-Shared.jpg" -Verbose
     New-OSDCloudiso -WorkspacePath $StudentSharedWorkspace
     $isoname = "OSDCloud - Student-Shared - $OSVer.iso"
-    rename-item -Path "D:\OSDCloud Workspaces\OSDCloud-WinRE-Student-Shared\OSDCloud.iso" -NewName $isoname
-    copy-item -Path "D:\OSDCloud Workspaces\OSDCloud-WinRE-Student-Shared\$isoname" -Destination 'D:\OSDCloud Workspaces'
+    rename-item -Path "$StudentSharedWorkspace\OSDCloud.iso" -NewName $isoname
+    copy-item -Path "$StudentSharedWorkspace\$isoname" -Destination 'D:\OSDCloud Workspaces'
 }
 
 ### Staff Shared ###
 Function StaffShared {
     param([String]$OSVer,[String]$Configfile)
+    $Staffsharedworkspace = "D:\OSDCloud Workspaces\OSDCloud-Staff-Shared - $OSver"
     New-OSDCloudworkspace -WorkspacePath $Staffsharedworkspace
     Remove-Item "$Staffsharedworkspace\Config\AutopilotJSON\IT_Devices.json" -Force
     Remove-Item "$Staffsharedworkspace\Config\AutopilotJSON\French_Staff_Shared.json" -Force
@@ -39,14 +34,15 @@ Function StaffShared {
     Remove-Item "$Staffsharedworkspace\Config\AutopilotJSON\NoAdmin_Student_Shared.json" -Force
     Edit-OSDCloudwinpe -WorkspacePath $Staffsharedworkspace -CloudDriver Dell, HP, Wifi -StartURL $Configfile -wallpaper "$Staffsharedworkspace\Wallpaper\Staff-Shared.jpg" -Verbose
     New-OSDCloudiso -WorkspacePath $Staffsharedworkspace
-    $isoname = "OSDCloud - Student-Shared - $OSVer.iso"
-    rename-item -Path "D:\OSDCloud Workspaces\OSDCloud-WinRE-Staff-Shared\OSDCloud.iso" -NewName $isoname
-    copy-item -Path "D:\OSDCloud Workspaces\OSDCloud-WinRE-Staff-Shared\$isoname" -Destination 'D:\OSDCloud Workspaces'
+    $isoname = "OSDCloud - Staff-Shared - $OSVer.iso"
+    rename-item -Path "$Staffsharedworkspace\OSDCloud.iso" -NewName $isoname
+    copy-item -Path "$Staffsharedworkspace\$isoname" -Destination 'D:\OSDCloud Workspaces'
 }
 
 ### Staff Assigned ###
 Function StaffAssigned {
     param([String]$OSVer,[String]$Configfile)
+    $Staffassignedworkspace = "D:\OSDCloud Workspaces\OSDCloud-Staff-Assigned - $OSver"
     New-OSDCloudworkspace -WorkspacePath $Staffassignedworkspace
     Remove-Item "$Staffassignedworkspace\Config\AutopilotJSON\IT_Devices.json" -Force
     Remove-Item "$Staffassignedworkspace\Config\AutopilotJSON\French_Staff_Shared.json" -Force
@@ -55,13 +51,14 @@ Function StaffAssigned {
     Edit-OSDCloudwinpe -workspacepath $Staffassignedworkspace -CloudDriver Dell, HP, Wifi -StartURL $Configfile -wallpaper "$Staffassignedworkspace\Wallpaper\Staff-Assigned.jpg" -Verbose
     New-OSDCloudiso -WorkspacePath $Staffassignedworkspace
     $isoname = "OSDCloud - Staff-Assigned - $OSVer.iso"
-    rename-item -Path "D:\OSDCloud Workspaces\OSDCloud-WinRE-Staff-Assigned\OSDCloud.iso" -NewName $isoname
-    copy-item -Path "D:\OSDCloud Workspaces\OSDCloud-WinRE-Staff-Assigned\$isoname.iso" -Destination 'D:\OSDCloud Workspaces'
+    rename-item -Path "$Staffassignedworkspace\OSDCloud.iso" -NewName $isoname
+    copy-item -Path "$Staffassignedworkspace\$isoname" -Destination 'D:\OSDCloud Workspaces'
 }
 
 ### French Staff Shared ###
 Function FrenchStaffShared {
     param([String]$OSVer,[String]$Configfile)
+    $FrenchStaffSharedworkspace = "D:\OSDCloud Workspaces\OSDCloud-French-Staff-Shared - $OSver"
     New-OSDCloudworkspace -WorkspacePath $FrenchStaffSharedworkspace
     Remove-Item "$FrenchStaffSharedworkspace\Config\AutopilotJSON\IT_Devices.json" -Force
     Remove-Item "$FrenchStaffSharedworkspace\Config\AutopilotJSON\NoAdmin_Staff_Assigned.json" -Force
@@ -70,33 +67,33 @@ Function FrenchStaffShared {
     Edit-OSDCloudwinpe -WorkspacePath $FrenchStaffSharedworkspace -CloudDriver Dell, HP, Wifi -StartURL $Configfile -wallpaper "$FrenchStaffSharedworkspace\Wallpaper\French-Staff-Shared.jpg" -Verbose
     New-OSDCloudiso -WorkspacePath $FrenchStaffSharedworkspace
     $isoname = "OSDCloud - French-Staff-Shared - $OSVer.iso"
-    rename-item -Path "D:\OSDCloud Workspaces\OSDCloud-WinRE-French-Staff-Shared\OSDCloud.iso" -NewName $isoname
-    copy-item -Path "D:\OSDCloud Workspaces\OSDCloud-WinRE-French-Staff-Shared\$isoname" -Destination 'D:\OSDCloud Workspaces'
+    rename-item -Path "$FrenchStaffSharedworkspace\OSDCloud.iso" -NewName $isoname
+    copy-item -Path "$FrenchStaffSharedworkspace\$isoname" -Destination 'D:\OSDCloud Workspaces'
 }
 
 ### General ###
 Function General {
+    $Generalworkspace = "D:\OSDCloud Workspaces\OSDCloud-Generalworkspace"
     New-OSDCloudworkspace -WorkspacePath $Generalworkspace
-    Edit-OSDCloudwinpe -workspacepath $Generalworkspace -CloudDriver Dell, HP -wallpaper "$Generalworkspace\Wallpaper\guiwallpaper.jpg" -Verbose -StartOSDCloudGUI
+    Edit-OSDCloudwinpe -workspacepath $Generalworkspace -CloudDriver Dell, HP, WiFi -wallpaper "$Generalworkspace\Wallpaper\guiwallpaper.jpg" -Verbose -StartOSDCloudGUI
     New-OSDCloudiso -WorkspacePath $Generalworkspace
     rename-item -Path "D:\OSDCloud Workspaces\OSDCloud-Generalworkspace\OSDCloud.iso" -NewName "OSDCloud - General.iso"
     copy-item -Path "D:\OSDCloud Workspaces\OSDCloud-Generalworkspace\OSDCloud - General.iso" -Destination 'D:\OSDCloud Workspaces'
 }
 
-
-# Windows 10 
-
 StudentShared -OSVer "Win10" -Configfile "https://raw.githubusercontent.com/retsdmbca/ZTI/master/RETSD-OSD-Git-Config.ps1"
-StudentShared -OSVer "Win11" -Configfile "https://raw.githubusercontent.com/retsdmbca/ZTI/master/RETSD-OSD-Git-Config-11.ps1"
+StudentShared -OSVer "Win11" -Configfile "https://raw.githubusercontent.com/retsdmbca/ZTI/master/RETSD-OSD-Git-Config-Win-11.ps1"
+
+StaffShared -OSVer "Win10" -Configfile "https://raw.githubusercontent.com/retsdmbca/ZTI/master/RETSD-OSD-Git-Config.ps1"
+StaffShared -OSVer "Win11" -Configfile "https://raw.githubusercontent.com/retsdmbca/ZTI/master/RETSD-OSD-Git-Config-Win-11.ps1"
 
 StaffAssigned -OSVer "Win10" -Configfile "https://raw.githubusercontent.com/retsdmbca/ZTI/master/RETSD-OSD-Git-Config.ps1"
-StaffAssigned -OSVer "Win11" -Configfile "https://raw.githubusercontent.com/retsdmbca/ZTI/master/RETSD-OSD-Git-Config-11.ps1"
+StaffAssigned -OSVer "Win11" -Configfile "https://raw.githubusercontent.com/retsdmbca/ZTI/master/RETSD-OSD-Git-Config-Win-11.ps1"
 
 FrenchStaffShared -OSVer "Win10" -Configfile "https://raw.githubusercontent.com/retsdmbca/ZTI/master/RETSD-OSD-Git-Config.ps1"
-FrenchStaffShared -OSVer "Win11" -Configfile "https://raw.githubusercontent.com/retsdmbca/ZTI/master/RETSD-OSD-Git-Config-11.ps1"
+FrenchStaffShared -OSVer "Win11" -Configfile "https://raw.githubusercontent.com/retsdmbca/ZTI/master/RETSD-OSD-Git-Config-Win-11.ps1"
 
-# Windows 11 - https://raw.githubusercontent.com/retsdmbca/ZTI/master/RETSD-OSD-Git-Config-11.ps1
-
+General #good
 
 #Update-OSDCloudUSB -DriverPack Lenovo
 #Update-OSDCloudUSB -osname 'Windows 11 22H2' -OSActivation Retail
