@@ -1,4 +1,4 @@
-Install-Module -Name OSD -Force
+Install-Module -Name OSD -Force -RequiredVersion 23.4.26.2
 Import-Module -name OSD -Force
 
 #Run this to generate the Template files - located in C:\Programdata\osdcloud
@@ -19,6 +19,20 @@ Function StudentShared {
     Edit-OSDCloudwinpe -WorkspacePath $StudentSharedWorkspace -CloudDriver Dell, HP, Wifi -StartURL $Configfile -wallpaper "$StudentSharedWorkspace\Wallpaper\Student-Shared.jpg" -Verbose
     New-OSDCloudiso -WorkspacePath $StudentSharedWorkspace
     $isoname = "OSDCloud - Student-Shared - $OSVer.iso"
+    rename-item -Path "$StudentSharedWorkspace\OSDCloud.iso" -NewName $isoname
+    copy-item -Path "$StudentSharedWorkspace\$isoname" -Destination 'D:\OSDCloud Workspaces'
+}
+
+Function StudentShared2 {
+    $StudentSharedWorkspace = "D:\OSDCloud Workspaces\OSDCloud-Student-Shared - 10"
+    New-OSDCloudworkspace -WorkspacePath $StudentSharedWorkspace
+    Remove-Item "$StudentSharedWorkspace\Config\AutopilotJSON\IT_Devices.json" -Force
+    Remove-Item "$StudentSharedWorkspace\Config\AutopilotJSON\NoAdmin_Staff_Assigned.json" -Force
+    Remove-Item "$StudentSharedWorkspace\Config\AutopilotJSON\NoAdmin_Staff_shared.json" -Force
+    Remove-Item "$StudentSharedWorkspace\Config\AutopilotJSON\French_Staff_Shared.json" -Force
+    Edit-OSDCloudwinpe -WorkspacePath $StudentSharedWorkspace -CloudDriver Dell, HP, Wifi -StartURL https://raw.githubusercontent.com/retsdmbca/ZTI/master/RETSD-OSD-Git-Config.ps1 -wallpaper "$StudentSharedWorkspace\Wallpaper\Student-Shared.jpg" -Verbose
+    New-OSDCloudiso -WorkspacePath $StudentSharedWorkspace
+    $isoname = "OSDCloud - Student-Shared.iso"
     rename-item -Path "$StudentSharedWorkspace\OSDCloud.iso" -NewName $isoname
     copy-item -Path "$StudentSharedWorkspace\$isoname" -Destination 'D:\OSDCloud Workspaces'
 }
@@ -84,6 +98,7 @@ Function General {
 StudentShared -OSVer "Win10" -Configfile "https://raw.githubusercontent.com/retsdmbca/ZTI/master/RETSD-OSD-Git-Config.ps1"
 StudentShared -OSVer "Win11" -Configfile "https://raw.githubusercontent.com/retsdmbca/ZTI/master/RETSD-OSD-Git-Config-Win-11.ps1"
 
+StaffShared -OSVer "Win10-21h2" -Configfile "https://raw.githubusercontent.com/retsdmbca/ZTI/master/21h2.ps1"
 StaffShared -OSVer "Win10" -Configfile "https://raw.githubusercontent.com/retsdmbca/ZTI/master/RETSD-OSD-Git-Config.ps1"
 StaffShared -OSVer "Win11" -Configfile "https://raw.githubusercontent.com/retsdmbca/ZTI/master/RETSD-OSD-Git-Config-Win-11.ps1"
 
