@@ -12,7 +12,7 @@ function Test-MicrosoftUpdateCatalog {
         Return $false
     }
 }
-Install-Module -Name OSD -Force -RequiredVersion 23.4.26.2
+
 Write-Host -ForegroundColor Green "Starting OSDCloud Zero Touch Installation"
 Start-Sleep -Seconds 5
 
