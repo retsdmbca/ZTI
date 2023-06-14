@@ -26,7 +26,7 @@ Function StudentShared {
 
 ### Staff Shared ###
 $osver="10"
-$Configfile="https://raw.githubusercontent.com/retsdmbca/ZTI/master/RETSD-OSD-Git-Config.ps1"
+$Configfile="https://raw.githubusercontent.com/retsdmbca/ZTI/master/OSD-Win10-Local-Image.ps1"
 Function StaffShared {
     param([String]$OSVer,[String]$Configfile)
     $Staffsharedworkspace = "D:\OSDCloud Workspaces\OSDCloud-Staff-Shared - $OSver"
