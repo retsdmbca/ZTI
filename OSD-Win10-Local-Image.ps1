@@ -1,6 +1,6 @@
 #Replaces faulty Function
-Remove-Item -path Function:\Test-MicrosoftUpdateCatalog
-function Test-MicrosoftUpdateCatalog {
+#Remove-Item -path Function:\Test-MicrosoftUpdateCatalog
+<#function Test-MicrosoftUpdateCatalog {
     [CmdletBinding()]
     param ()
 
@@ -12,7 +12,7 @@ function Test-MicrosoftUpdateCatalog {
         Return $false
     }
 }
-
+#>
 Write-Host -ForegroundColor Green "Starting OSDCloud Zero Touch Installation using Local File"
 Start-Sleep -Seconds 5
 
