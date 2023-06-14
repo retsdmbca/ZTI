@@ -13,12 +13,16 @@
     }
 }
 #>
-Write-Host -ForegroundColor Green "Starting OSDCloud Zero Touch Installation using Local File 1.1"
+Write-Host -ForegroundColor Green "Starting OSDCloud Zero Touch Installation using Local File"
 Start-Sleep -Seconds 5
 
 #Start OSDCloud ZTI
 Write-Host -ForegroundColor Green "Start OSDCloud"
-Start-osdcloud -FindImageFile -OSImageIndex "1" -zti -Firmware
+Start-osdcloud -FindImageFile -zti -Firmware
+
+New-Item -Path "C:\Autopilot Logs" -ItemType Directory -Force
+copy-item -Path "x:\OSDCLOUD\logs" -Destination 'C:\Autopilot Logs'
+
 Write-Host " "
 Write-Host -ForegroundColor Red "                          ########################################################"
 Write-Host -ForegroundColor Blue "                          ########################################################"
