@@ -18,7 +18,7 @@ Start-Sleep -Seconds 5
 
 #Start OSDCloud ZTI
 Write-Host -ForegroundColor Green "Start OSDCloud"
-Start-osdcloud -FindImageFile -zti -Firmware -SkipODT
+Start-osdcloud -FindImageFile -OSImageIndex 1 -zti -Firmware -SkipODT
 Write-Host " "
 Write-Host -ForegroundColor Red "                          ########################################################"
 Write-Host -ForegroundColor Blue "                          ########################################################"
