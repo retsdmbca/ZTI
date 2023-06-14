@@ -1,4 +1,5 @@
-Install-Module -Name OSD -Force -RequiredVersion 23.4.26.2
+#Install-Module -Name OSD -Force -RequiredVersion 22.10.24.1
+Install-Module -Name OSD -Force
 Import-Module -name OSD -Force
 
 #Run this to generate the Template files - located in C:\Programdata\osdcloud
@@ -23,30 +24,30 @@ Function StudentShared {
     copy-item -Path "$StudentSharedWorkspace\$isoname" -Destination 'D:\OSDCloud Workspaces'
 }
 
-Function StudentShared2 {
-    $StudentSharedWorkspace = "D:\OSDCloud Workspaces\OSDCloud-Student-Shared - 10"
-    New-OSDCloudworkspace -WorkspacePath $StudentSharedWorkspace
-    Remove-Item "$StudentSharedWorkspace\Config\AutopilotJSON\IT_Devices.json" -Force
-    Remove-Item "$StudentSharedWorkspace\Config\AutopilotJSON\NoAdmin_Staff_Assigned.json" -Force
-    Remove-Item "$StudentSharedWorkspace\Config\AutopilotJSON\NoAdmin_Staff_shared.json" -Force
-    Remove-Item "$StudentSharedWorkspace\Config\AutopilotJSON\French_Staff_Shared.json" -Force
-    Edit-OSDCloudwinpe -WorkspacePath $StudentSharedWorkspace -CloudDriver Dell, HP, Wifi -StartURL https://raw.githubusercontent.com/retsdmbca/ZTI/master/RETSD-OSD-Git-Config.ps1 -wallpaper "$StudentSharedWorkspace\Wallpaper\Student-Shared.jpg" -Verbose
-    New-OSDCloudiso -WorkspacePath $StudentSharedWorkspace
-    $isoname = "OSDCloud - Student-Shared.iso"
-    rename-item -Path "$StudentSharedWorkspace\OSDCloud.iso" -NewName $isoname
-    copy-item -Path "$StudentSharedWorkspace\$isoname" -Destination 'D:\OSDCloud Workspaces'
-}
-
 ### Staff Shared ###
+$osver="10"
+$Configfile="https://raw.githubusercontent.com/retsdmbca/ZTI/master/RETSD-OSD-Git-Config.ps1"
 Function StaffShared {
     param([String]$OSVer,[String]$Configfile)
     $Staffsharedworkspace = "D:\OSDCloud Workspaces\OSDCloud-Staff-Shared - $OSver"
+    Set-OSDCloudTemplate -Name 'OSDCloud-Staff-Shared - $OSver'
     New-OSDCloudworkspace -WorkspacePath $Staffsharedworkspace
+    #Cleanup Languages
+    $KeepTheseDirs = @('boot','efi','en-us','sources','fonts','resources')
+    Get-ChildItem "$(Get-OSDCloudWorkspace)\Media" | Where {$_.PSIsContainer} | Where {$_.Name -notin $KeepTheseDirs} | Remove-Item -Recurse -Force
+    Get-ChildItem "$(Get-OSDCloudWorkspace)\Media\Boot" | Where {$_.PSIsContainer} | Where {$_.Name -notin $KeepTheseDirs} | Remove-Item -Recurse -Force
+    Get-ChildItem "$(Get-OSDCloudWorkspace)\Media\EFI\Microsoft\Boot" | Where {$_.PSIsContainer} | Where {$_.Name -notin $KeepTheseDirs} | Remove-Item -Recurse -Force
+
     Remove-Item "$Staffsharedworkspace\Config\AutopilotJSON\IT_Devices.json" -Force
     Remove-Item "$Staffsharedworkspace\Config\AutopilotJSON\French_Staff_Shared.json" -Force
     Remove-Item "$Staffsharedworkspace\Config\AutopilotJSON\NoAdmin_Staff_Assigned.json" -Force
     Remove-Item "$Staffsharedworkspace\Config\AutopilotJSON\NoAdmin_Student_Shared.json" -Force
     Edit-OSDCloudwinpe -WorkspacePath $Staffsharedworkspace -CloudDriver Dell, HP, Wifi -StartURL $Configfile -wallpaper "$Staffsharedworkspace\Wallpaper\Staff-Shared.jpg" -Verbose
+    
+    $WindowsImage = "D:\windows.wim"
+    $Destination = "$(Get-OSDCloudWorkspace)\Media\OSDCloud\OS"
+    New-Item -Path $Destination -ItemType Directory -Force
+    Copy-Item -Path $WindowsImage -Destination "$Destination\CustomImage.wim" -Force
     New-OSDCloudiso -WorkspacePath $Staffsharedworkspace
     $isoname = "OSDCloud - Staff-Shared - $OSVer.iso"
     rename-item -Path "$Staffsharedworkspace\OSDCloud.iso" -NewName $isoname
