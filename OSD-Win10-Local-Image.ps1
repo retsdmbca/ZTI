@@ -13,12 +13,12 @@
     }
 }
 #>
-Write-Host -ForegroundColor Green "Starting OSDCloud Zero Touch Installation using Local File"
+Write-Host -ForegroundColor Green "Starting OSDCloud Zero Touch Installation using Local File 1.1"
 Start-Sleep -Seconds 5
 
 #Start OSDCloud ZTI
 Write-Host -ForegroundColor Green "Start OSDCloud"
-Start-osdcloud -FindImageFile -OSImageIndex 1 -zti -Firmware -SkipODT
+Start-osdcloud -FindImageFile -OSImageIndex "1" -zti -Firmware -SkipODT
 Write-Host " "
 Write-Host -ForegroundColor Red "                          ########################################################"
 Write-Host -ForegroundColor Blue "                          ########################################################"
