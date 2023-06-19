@@ -18,7 +18,8 @@ Start-Sleep -Seconds 5
 
 #Start OSDCloud ZTI
 Write-Host -ForegroundColor Green "Start OSDCloud"
-Start-osdcloud -FindImageFile -zti -Firmware -OSImageIndex "1"
+$OSImageIndex = "1"
+Start-osdcloud -FindImageFile -zti -Firmware
 
 New-Item -Path "C:\Autopilot Logs" -ItemType Directory -Force
 copy-item -Path "x:\OSDCLOUD\logs\WinREWiFi.txt" -Destination 'C:\Autopilot Logs\WinREWiFi.txt'
