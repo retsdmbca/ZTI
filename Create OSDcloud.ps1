@@ -143,6 +143,11 @@ FrenchStaffShared -OSVer "Win11" -Configfile "https://raw.githubusercontent.com/
 
 General #good
 
+#   https://www.wintips.org/how-to-extract-install-esd-to-install-wim-windows-10-8/
+Mount-diskImage -ImagePath "D:\Windows11.iso"
+dism /Get-WimInfo /WimFile:install.esd
+dism /export-image /SourceImageFile:install.esd /SourceIndex:6 /DestinationImageFile:Windows11.wim /Compress:max /CheckIntegrity
+
 #Update-OSDCloudUSB -DriverPack Lenovo
 #Update-OSDCloudUSB -osname 'Windows 11 22H2' -OSActivation Retail
 ###Create USB Cloud - This will directly create OSDcloud USB drive.
