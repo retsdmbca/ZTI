@@ -1,4 +1,3 @@
-#Install-Module -Name OSD -Force -RequiredVersion 22.10.24.1
 Install-Module -Name OSD -Force
 Import-Module -name OSD -Force
 
@@ -17,7 +16,7 @@ Function CopyWim {
     New-Item -Path $driversroot\Dell -ItemType Directory -Force
     New-Item -Path $driversroot\HP -ItemType Directory -Force
     New-Item -Path $driversroot\Lenovo -ItemType Directory -Force
-    Copy-Item -Path "D:\$WindowsImage" -Destination "$Destination\$windowsimage" -Force
+    Copy-Item -Path "D:\Project Files\$WindowsImage" -Destination "$Destination\$windowsimage" -Force
    }
 ### Student Shared ###
 Function StudentShared {
@@ -129,6 +128,13 @@ StaffShared -OSVer "Win10" -Configfile "https://raw.githubusercontent.com/retsdm
 StaffAssigned -OSVer "Win10" -Configfile "https://raw.githubusercontent.com/retsdmbca/ZTI/master/OSD-Local-Image.ps1" -WindowsImage "Windows10.wim"
 FrenchStaffShared -OSVer "Win10" -Configfile "https://raw.githubusercontent.com/retsdmbca/ZTI/master/OSD-Local-Image.ps1" -WindowsImage "Windows10.wim"
 
+StudentShared -OSVer "Win11" -Configfile "https://raw.githubusercontent.com/retsdmbca/ZTI/master/OSD-Local-Image.ps1" -WindowsImage "Windows11.wim"
+StaffShared -OSVer "Win11" -Configfile "https://raw.githubusercontent.com/retsdmbca/ZTI/master/OSD-Local-Image.ps1" -WindowsImage "Windows11.wim"
+StaffAssigned -OSVer "Win11" -Configfile "https://raw.githubusercontent.com/retsdmbca/ZTI/master/OSD-Local-Image.ps1" -WindowsImage "Windows11.wim"
+FrenchStaffShared -OSVer "Win11" -Configfile "https://raw.githubusercontent.com/retsdmbca/ZTI/master/OSD-Local-Image.ps1" -WindowsImage "Windows11.wim"
+
+
+
 StudentShared -OSVer "Win10" -Configfile "https://raw.githubusercontent.com/retsdmbca/ZTI/master/RETSD-OSD-Git-Config.ps1"
 StudentShared -OSVer "Win11" -Configfile "https://raw.githubusercontent.com/retsdmbca/ZTI/master/RETSD-OSD-Git-Config-Win-11.ps1"
 
@@ -143,6 +149,11 @@ FrenchStaffShared -OSVer "Win11" -Configfile "https://raw.githubusercontent.com/
 
 General #good
 
+
+
+
+
+<#
 #   https://www.wintips.org/how-to-extract-install-esd-to-install-wim-windows-10-8/
 Mount-diskImage -ImagePath "D:\Windows11.iso"
 dism /Get-WimInfo /WimFile:install.esd
@@ -151,15 +162,7 @@ dism /export-image /SourceImageFile:install.esd /SourceIndex:6 /DestinationImage
 #Update-OSDCloudUSB -DriverPack Lenovo
 #Update-OSDCloudUSB -osname 'Windows 11 22H2' -OSActivation Retail
 ###Create USB Cloud - This will directly create OSDcloud USB drive.
-<#
-new-osdcloudusb -WorkspacePath $Generalworkspace
-new-osdcloudusb -WorkspacePath $Staffsharedworkspace
-new-osdcloudusb -WorkspacePath $Staffassignedworkspace
-new-osdcloudusb -WorkspacePath $FrenchStaffSharedworkspace
-
-new-osdcloudusb -fromIsoFile "D:\OSDCloud Workspaces\OSDCloud-Generalworkspace\OSDCloud.iso"
 #>
-
 
 
 <# THIS BLOCK OF TEXT IS USED TO EXPORT CONFIG FILES FROM AUTOPILOT
@@ -176,12 +179,8 @@ foreach ($autopilotprofile in $autopilotprofiles) {
     $autopilotprofile | convertto-autopilotconfigurationJSON | out-file $exportpath -Encoding ASCII
     
 }
-#>
 
-$Destination = "$(Get-OSDCloudWorkspace)\Media\OSDCloud\OS"
-    New-Item -Path $Destination -ItemType Directory -Force
-    Copy-Item -Path $WindowsImage -Destination "$Destination\CustomImage.wim" -Force
-
+#Install-Module -Name OSD -Force -RequiredVersion 22.10.24.1
 Function StudentShared {
     param([String]$OSVer,[String]$Configfile)
     $StudentSharedWorkspace = "D:\OSDCloud Workspaces\OSDCloud-Student-Shared - $OSver"
@@ -238,3 +237,4 @@ Function General {
     rename-item -Path "D:\OSDCloud Workspaces\OSDCloud-Generalworkspace\OSDCloud.iso" -NewName "OSDCloud - General.iso"
     copy-item -Path "D:\OSDCloud Workspaces\OSDCloud-Generalworkspace\OSDCloud - General.iso" -Destination 'D:\OSDCloud Workspaces'
 }
+#>

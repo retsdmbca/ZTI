@@ -18,7 +18,6 @@ Start-Sleep -Seconds 5
 
 #Start OSDCloud ZTI
 Write-Host -ForegroundColor Green "Start OSDCloud"
-$OSImageIndex = "1"
 Start-osdcloud -FindImageFile -zti -Firmware
 
 New-Item -Path "C:\Autopilot Logs" -ItemType Directory -Force
