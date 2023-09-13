@@ -14,21 +14,21 @@ function Test-MicrosoftUpdateCatalog {
     }
 }
 #>
-Write-Host -ForegroundColor Green "Starting OSDCloud Zero Touch Installation"
-Start-Sleep -Seconds 5
+#Write-Host -ForegroundColor Green "Starting OSDCloud Zero Touch Installation"
+#Start-Sleep -Seconds 5
 
 #Start OSDCloud ZTI
-Write-Host -ForegroundColor Green "Start OSDCloud"
+#Write-Host -ForegroundColor Green "Start OSDCloud"
 Start-OSDCloud -OSBuild "22H2" -OSLanguage en-us -OSEdition Pro -OSLicense Retail -ZTI -OSVersion "Windows 11" -Firmware
-Write-Host " "
-Write-Host -ForegroundColor Red "                          ########################################################"
-Write-Host -ForegroundColor Blue "                          ########################################################"
-Write-Host -ForegroundColor Green "                          *****  REMOVE USB KEY... PRESS ANY KEY TO CONTINUE *****"
-Write-Host -ForegroundColor Blue "                          ########################################################"
-Write-Host -ForegroundColor Red "                          ########################################################"
-$Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+#Write-Host " "
+#Write-Host -ForegroundColor Red "                          ########################################################"
+#Write-Host -ForegroundColor Blue "                          ########################################################"
+#Write-Host -ForegroundColor Green "                          *****  REMOVE USB KEY... PRESS ANY KEY TO CONTINUE *****"
+#Write-Host -ForegroundColor Blue "                          ########################################################"
+#Write-Host -ForegroundColor Red "                          ########################################################"
+#$Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
 
 #Restart from WinPE
-Write-Host -ForegroundColor Green "Restarting in 10 seconds!"
-Start-Sleep -Seconds 10
-wpeutil reboot
+#Write-Host -ForegroundColor Green "Restarting in 10 seconds!"
+#Start-Sleep -Seconds 10
+#wpeutil reboot
